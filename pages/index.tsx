@@ -61,7 +61,7 @@ const Home: NextPage = () => {
         >
           Powered by{' '}
           <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+            <Image src="/subject/5ffd66e36a6348f5733d3c6a9d62892a.png" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
       </footer>

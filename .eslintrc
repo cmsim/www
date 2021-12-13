@@ -1,0 +1,23 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "eslint-plugin-prettier",
+    "plugin:react/recommended",
+    "plugin:@next/next/recommended",
+    "standard"
+  ],
+  "plugins": ["eslint-plugin-prettier", "react"],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "bracketSpacing": true,
+        "semi": false,
+        "arrowParens": "avoid",
+        "printWidth": 80,
+        "trailingComma": "none"
+      }
+    ]
+  }
+}

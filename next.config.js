@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
+const withPWA = require('next-pwa')
+module.exports = withPWA({
   future: {
     webpack5: true
   },
@@ -8,4 +9,4 @@ module.exports = {
     loader: 'imgix',
     path: 'https://cms-1251036128.cos.ap-shanghai.myqcloud.com'
   }
-}
+})

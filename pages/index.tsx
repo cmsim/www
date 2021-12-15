@@ -5,12 +5,6 @@ import styles from '../styles/Home.module.css'
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
-      <Head>
-        <title>藏、藏书、藏动漫、藏网站、藏any</title>
-        <meta name='description' content='一个可以收藏任何东西的网站' />
-        <meta name='keyword' content='藏,藏书,藏动漫,藏网站,藏any' />
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
       <div className='container mx-auto flex p-4 justify-center flex-wrap content-center h-[calc(100vh_-_90px)]'>
         <h1 className='text-[210px] w-full text-center font-thin text-slate-800'>
           CANG.IM

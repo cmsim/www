@@ -1,10 +1,12 @@
 {
   "extends": [
+    "next",
     "next/core-web-vitals",
     "eslint-plugin-prettier",
     "plugin:react/recommended",
     "plugin:@next/next/recommended",
-    "standard"
+    "standard",
+    "prettier"
   ],
   "plugins": ["eslint-plugin-prettier", "react"],
   "rules": {

@@ -7,13 +7,14 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      boxShadow: {
+        menu: '0px 0px 15px rgba(101, 119, 134, .2), 0px 0px 3px 1px rgba(101, 119, 134, .15)' // 阴影 start 0px 0px 15px, 阴影 end 0px 0px 3px 1px
+      },
       colors: {
         cang: {
           3: 'rgba(0, 0, 0, .03)', // feed hover 右侧 hover 灰
           10: 'rgba(249, 24, 128, .1)', // 喜欢 hover
           11: 'rgba(0, 186, 124, .1)', // 转发 hover
-          15: 'rgba(101, 119, 134, .15)', // 阴影 end 0px 0px 3px 1px
-          20: 'rgba(101, 119, 134, .2)', // 阴影 start 0px 0px 15px
           30: 'rgba(29, 155, 240, .1)', // 主色 hover 评论 hover
           40: 'rgba(15, 20, 25, .1)', // 菜单 menu
           100: '#f7f9f9', // 背景 边框

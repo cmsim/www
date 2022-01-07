@@ -13,6 +13,7 @@ import {
 } from '@heroicons/react/outline'
 import Item from '@/components/Item'
 import Nav from '@/components/Nav'
+import { Virtuoso } from 'react-virtuoso'
 
 const menuItems = [
   { title: '首页', icon: <HomeIcon className='w-6 h-6 mr-4' />, href: '' },
@@ -115,9 +116,11 @@ const Home: NextPage = () => {
                 <h2 className='font-bold text-lg'>主页</h2>
                 <CogIcon className='w-6 h-6' />
               </div>
-              {Array.from(new Array(40).keys()).map(item => (
-                <Item key={item} />
-              ))}
+              <Virtuoso
+                useWindowScroll
+                totalCount={1000}
+                itemContent={index => <Item key={index} />}
+              />
             </article>
             <div className='w-[350px] mt-2'>
               <div className='flex relative h-10'>

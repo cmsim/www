@@ -16,10 +16,14 @@ import Nav from '@/components/Nav'
 import { Virtuoso } from 'react-virtuoso'
 
 const menuItems = [
-  { title: '首页', icon: <HomeIcon className='w-6 h-6 mr-4' />, href: '' },
-  { title: '探索', icon: <HashtagIcon className='w-6 h-6 mr-4' />, href: '' },
-  { title: '通知', icon: <BellIcon className='w-6 h-6 mr-4' />, href: '' },
-  { title: '私信', icon: <MailIcon className='w-6 h-6 mr-4' />, href: '' }
+  { title: '首页', icon: <HomeIcon className='w-6 h-6 mr-4' />, href: '/home' },
+  {
+    title: '探索',
+    icon: <HashtagIcon className='w-6 h-6 mr-4' />,
+    href: '/home'
+  },
+  { title: '通知', icon: <BellIcon className='w-6 h-6 mr-4' />, href: '/home' },
+  { title: '私信', icon: <MailIcon className='w-6 h-6 mr-4' />, href: '/home' }
 ]
 
 const Home: NextPage = () => {
@@ -67,7 +71,7 @@ const Home: NextPage = () => {
               <nav className='w-full h-screen flex-grow pt-2'>
                 <ul>
                   {menuItems.map(item => (
-                    <Nav {...item} />
+                    <Nav {...item} key={item.title} />
                   ))}
                 </ul>
               </nav>

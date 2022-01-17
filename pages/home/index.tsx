@@ -134,8 +134,8 @@ const Home: NextPage = () => {
                   className='flex pl-10 border border-transparent rounded-full bg-cang-200 w-full mr-4 focus:outline-none placeholder:ring-cang-400 text-cang-500 focus:ring-cang-800 focus:border-cang-800 focus:bg-cang-300'
                 />
               </div>
-              <footer className='mt-4'>
-                © {new Date().getFullYear()} Cang.im
+              <footer className='mt-4 text-cang-350'>
+                © {new Date().getFullYear()} 藏网阁 • CANG.IM
               </footer>
             </div>
           </div>

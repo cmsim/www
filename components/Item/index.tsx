@@ -12,7 +12,7 @@ const Item = () => {
   return (
     <div className='flex border-t-cang-200 border-t py-3 cursor-pointer hover:bg-cang-3 px-4'>
       <div className='w-12 h-12 overflow-hidden rounded-full mr-3'>
-        <img src='https://pbs.twimg.com/profile_images/1412404935162056709/hOYptqtI_normal.jpg' />
+        <img src='https://tva1.sinaimg.cn/large/006bnWk0gy1gzd2ej5yzyj301c01cgld.jpg' />
       </div>
       <div className='flex-[1]'>
         <div className='flex justify-between h-5'>

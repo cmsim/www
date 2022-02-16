@@ -79,7 +79,7 @@ const Home: NextPage = () => {
                 <div
                   className='w-10 h-10 rounded-full overflow-hidden'
                   onClick={openModal}>
-                  <img src='https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png' />
+                  <img src='https://tva1.sinaimg.cn/large/006bnWk0gy1gzd2ej5yzyj301c01cgld.jpg' />
                 </div>
                 <Popover className='relative'>
                   {({ open }) => (
@@ -87,7 +87,7 @@ const Home: NextPage = () => {
                       <Popover.Button
                         className={`${open ? '' : 'text-opacity-90'}`}>
                         <div className='w-10 h-10 rounded-full overflow-hidden'>
-                          <img src='https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png' />
+                          <img src='https://tva1.sinaimg.cn/large/006bnWk0gy1gzd2ej5yzyj301c01cgld.jpg' />
                         </div>
                       </Popover.Button>
                       <Transition

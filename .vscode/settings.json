@@ -4,6 +4,8 @@
   },
   "eslint.validate": ["javascript", "javascriptreact", "vue"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs":"active",
   "eslint.format.enable": true,
   "editor.formatOnSave": true,
   "css.validate": false,

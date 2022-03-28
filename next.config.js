@@ -15,5 +15,10 @@ module.exports = withPWA({
   images: {
     loader: 'imgix',
     path: 'https://cms-1251036128.cos.ap-shanghai.myqcloud.com'
+  },
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true
   }
 })

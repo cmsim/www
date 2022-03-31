@@ -21,7 +21,7 @@
         "bracketSpacing": true,
         "semi": false,
         "arrowParens": "avoid",
-        "printWidth": 80,
+        "printWidth": 140,
         "trailingComma": "none"
       }
     ]

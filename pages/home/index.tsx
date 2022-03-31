@@ -9,7 +9,11 @@ import {
   HashtagIcon,
   HomeIcon,
   CogIcon,
-  MailIcon
+  MailIcon,
+  UserIcon,
+  TagIcon,
+  BookmarkIcon,
+  ClipboardListIcon
 } from '@heroicons/react/outline'
 import Item from '@/components/Item'
 import Nav from '@/components/Nav'
@@ -17,13 +21,13 @@ import { Virtuoso } from 'react-virtuoso'
 
 const menuItems = [
   { title: '首页', icon: <HomeIcon className='w-6 h-6 mr-4' />, href: '/home' },
-  {
-    title: '探索',
-    icon: <HashtagIcon className='w-6 h-6 mr-4' />,
-    href: '/home'
-  },
+  { title: '探索', icon: <HashtagIcon className='w-6 h-6 mr-4' />, href: '/home' },
+  { title: '书签', icon: <BookmarkIcon className='w-6 h-6 mr-4' />, href: '/home' },
+  { title: '列表', icon: <ClipboardListIcon className='w-6 h-6 mr-4' />, href: '/home' },
   { title: '通知', icon: <BellIcon className='w-6 h-6 mr-4' />, href: '/home' },
-  { title: '私信', icon: <MailIcon className='w-6 h-6 mr-4' />, href: '/home' }
+  { title: '私信', icon: <MailIcon className='w-6 h-6 mr-4' />, href: '/home' },
+  { title: '标签', icon: <TagIcon className='w-6 h-6 mr-4' />, href: '/home' },
+  { title: '资料', icon: <UserIcon className='w-6 h-6 mr-4' />, href: '/home' }
 ]
 
 const Home: NextPage = () => {
@@ -37,15 +41,13 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className='flex'>
+    <>
       <div className='flex flex-1'>
         <header className='flex grow items-end flex-col'>
           <div className='w-60 h-screen relative top-0'>
-            <div className='fixed'>
+            <div className='fixed w-52'>
               <nav className='items-center flex pl-4'>
-                <a
-                  className='inline-flex font-normal items-center text-cang-800 py-1 mr-0 sm:mr-3 whitespace-nowrap text-2xl'
-                  href='/'>
+                <a className='inline-flex font-normal items-center text-cang-800 py-1 mr-0 sm:mr-3 whitespace-nowrap text-2xl' href='/'>
                   藏
                 </a>
                 <div className='w-full leading-loose flex flex-initial items-center h-auto pr-5 pt-0.5'>
@@ -54,38 +56,32 @@ const Home: NextPage = () => {
                   </div>
                 </div>
                 <div className='block dark:hidden'>
-                  <button
-                    type='button'
-                    className='hidden lg:flex items-center h-full pr-2'>
+                  <button type='button' className='hidden lg:flex items-center h-full pr-2'>
                     <MoonIcon className='w-5 h-5' />
                   </button>
                 </div>
                 <div className='hidden dark:block'>
-                  <button
-                    type='button'
-                    className='hidden lg:flex items-center h-full pr-2'>
+                  <button type='button' className='hidden lg:flex items-center h-full pr-2'>
                     <SunIcon className='w-5 h-5' />
                   </button>
                 </div>
               </nav>
-              <nav className='w-full h-screen flex-grow pt-2'>
+              <nav className='w-full flex-grow pt-2'>
                 <ul>
                   {menuItems.map(item => (
                     <Nav {...item} key={item.title} />
                   ))}
                 </ul>
               </nav>
+              <div className='flex bg-cang-800 text-white h-12 justify-center items-center rounded-full mt-4 cursor-pointer'>发动态</div>
               <div className='fixed bottom-0 justify-center flex'>
-                <div
-                  className='w-10 h-10 rounded-full overflow-hidden'
-                  onClick={openModal}>
+                <div className='w-10 h-10 rounded-full overflow-hidden' onClick={openModal}>
                   <img src='https://tva1.sinaimg.cn/large/006bnWk0gy1gzd2ej5yzyj301c01cgld.jpg' />
                 </div>
                 <Popover className='relative'>
                   {({ open }) => (
                     <>
-                      <Popover.Button
-                        className={`${open ? '' : 'text-opacity-90'}`}>
+                      <Popover.Button className={`${open ? '' : 'text-opacity-90'}`}>
                         <div className='w-10 h-10 rounded-full overflow-hidden'>
                           <img src='https://tva1.sinaimg.cn/large/006bnWk0gy1gzd2ej5yzyj301c01cgld.jpg' />
                         </div>
@@ -100,9 +96,7 @@ const Home: NextPage = () => {
                         leaveTo='opacity-0 translate-y-1'>
                         <Popover.Panel className='absolute z-10 bottom-14 w-screen max-w-sm px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0'>
                           <div className='overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5'>
-                            <div className='relative grid gap-8 bg-white p-7 lg:grid-cols-2'>
-                              1111
-                            </div>
+                            <div className='relative grid gap-8 bg-white p-7 lg:grid-cols-2'>1111</div>
                           </div>
                         </Popover.Panel>
                       </Transition>
@@ -120,11 +114,7 @@ const Home: NextPage = () => {
                 <h2 className='font-bold text-lg'>主页</h2>
                 <CogIcon className='w-6 h-6' />
               </div>
-              <Virtuoso
-                useWindowScroll
-                totalCount={1000}
-                itemContent={index => <Item key={index} />}
-              />
+              <Virtuoso useWindowScroll totalCount={1000} itemContent={index => <Item key={index} />} />
             </article>
             <div className='w-[350px] mt-2'>
               <div className='flex relative h-10'>
@@ -134,19 +124,14 @@ const Home: NextPage = () => {
                   className='flex pl-10 border border-transparent rounded-full bg-cang-200 w-full mr-4 focus:outline-none placeholder:ring-cang-400 text-cang-500 focus:ring-cang-800 focus:border-cang-800 focus:bg-cang-300'
                 />
               </div>
-              <footer className='mt-4 text-cang-350'>
-                © {new Date().getFullYear()} 藏网阁 • CANG.IM
-              </footer>
+              <footer className='mt-4 text-cang-350'>© {new Date().getFullYear()} 藏网阁 • CANG.IM</footer>
             </div>
           </div>
         </main>
       </div>
 
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog
-          as='div'
-          className='fixed inset-0 z-10 overflow-y-auto'
-          onClose={closeModal}>
+        <Dialog as='div' className='fixed inset-0 z-10 overflow-y-auto' onClose={closeModal}>
           <div className='min-h-screen px-4 text-center'>
             <Transition.Child
               as={Fragment}
@@ -158,9 +143,7 @@ const Home: NextPage = () => {
               leaveTo='opacity-0'>
               <Dialog.Overlay className='fixed inset-0' />
             </Transition.Child>
-            <span
-              className='inline-block h-screen align-middle'
-              aria-hidden='true'>
+            <span className='inline-block h-screen align-middle' aria-hidden='true'>
               &#8203;
             </span>
             <Transition.Child
@@ -172,15 +155,12 @@ const Home: NextPage = () => {
               leaveFrom='opacity-100 scale-100'
               leaveTo='opacity-0 scale-95'>
               <div className='inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl'>
-                <Dialog.Title
-                  as='h3'
-                  className='text-lg font-medium leading-6 text-gray-900'>
+                <Dialog.Title as='h3' className='text-lg font-medium leading-6 text-gray-900'>
                   Payment successful
                 </Dialog.Title>
                 <div className='mt-2'>
                   <p className='text-sm text-gray-500'>
-                    Your payment has been successfully submitted. We’ve sent you
-                    an email with all of the details of your order.
+                    Your payment has been successfully submitted. We’ve sent you an email with all of the details of your order.
                   </p>
                 </div>
 
@@ -197,7 +177,7 @@ const Home: NextPage = () => {
           </div>
         </Dialog>
       </Transition>
-    </div>
+    </>
   )
 }
 

@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { useState, Fragment } from 'react'
+import { useState, Fragment, ChangeEvent } from 'react'
 import { Dialog, Transition, Popover } from '@headlessui/react'
 import {
   MoonIcon,
@@ -13,7 +13,12 @@ import {
   UserIcon,
   TagIcon,
   BookmarkIcon,
-  ClipboardListIcon
+  ClipboardListIcon,
+  GlobeIcon,
+  EmojiHappyIcon,
+  PhotographIcon,
+  LinkIcon,
+  AtSymbolIcon
 } from '@heroicons/react/outline'
 import Item from '@/components/Item'
 import Nav from '@/components/Nav'
@@ -27,17 +32,23 @@ const menuItems = [
   { title: '通知', icon: <BellIcon className='w-6 h-6 mr-4' />, href: '/home' },
   { title: '私信', icon: <MailIcon className='w-6 h-6 mr-4' />, href: '/home' },
   { title: '标签', icon: <TagIcon className='w-6 h-6 mr-4' />, href: '/home' },
-  { title: '资料', icon: <UserIcon className='w-6 h-6 mr-4' />, href: '/home' }
+  { title: '资料', icon: <UserIcon className='w-6 h-6 mr-4' />, href: '/home' },
+  { title: '设置', icon: <CogIcon className='w-6 h-6 mr-4' />, href: '/home' }
 ]
 
 const Home: NextPage = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [msg, setMsg] = useState('')
   function closeModal() {
     setIsOpen(false)
   }
 
   function openModal() {
     setIsOpen(true)
+  }
+
+  const pin = (e: ChangeEvent<HTMLDivElement>) => {
+    setMsg(e.target.innerHTML)
   }
 
   return (
@@ -73,7 +84,9 @@ const Home: NextPage = () => {
                   ))}
                 </ul>
               </nav>
-              <div className='flex bg-cang-800 text-white h-12 justify-center items-center rounded-full mt-4 cursor-pointer'>发动态</div>
+              <div className='flex bg-cang-800 text-white h-12 justify-center items-center rounded-full mt-4 cursor-pointer hover:bg-cang-810 active:bg-cang-820'>
+                发动态
+              </div>
               <div className='fixed bottom-0 justify-center flex'>
                 <div className='w-10 h-10 rounded-full overflow-hidden' onClick={openModal}>
                   <img src='https://tva1.sinaimg.cn/large/006bnWk0gy1gzd2ej5yzyj301c01cgld.jpg' />
@@ -110,9 +123,47 @@ const Home: NextPage = () => {
         <main className='flex grow items-start flex-col'>
           <div className='flex justify-between w-[1000px]'>
             <article className='w-[624px] border-r border-l border-cang-200'>
-              <div className='flex h-14 pt-4 px-4 justify-between'>
-                <h2 className='font-bold text-lg'>主页</h2>
-                <CogIcon className='w-6 h-6' />
+              <div className='flex px-4 mt-4'>
+                <div className='flex basis-12 mr-3'>
+                  <div className='w-12 h-12 rounded-full overflow-hidden'>
+                    <img src='https://tva1.sinaimg.cn/large/006bnWk0gy1gzd2ej5yzyj301c01cgld.jpg' />
+                  </div>
+                </div>
+                <div className='flex-1 relative'>
+                  {!msg && <span className='absolute left-3 top-2.5 text-lg text-cang-350'>有什么新鲜事？</span>}
+                  <div
+                    className='w-full p-3 leading-6 whitespace-pre-wrap break-words outline-none select-text text-base break-all'
+                    onInput={pin}
+                    contentEditable='true'></div>
+                  <div className='flex justify-between border-t border-t-cang-200 mt-3 mb-3 pt-3'>
+                    <div className='flex text-cang-800 h-9 items-center'>
+                      <div className='flex items-center justify-center w-9 h-9 rounded-full cursor-pointer relative hover:bg-cang-30'>
+                        <EmojiHappyIcon className='w-5 h-5' />
+                      </div>
+                      <div className='flex items-center justify-center w-9 h-9 rounded-full cursor-pointer relative hover:bg-cang-30'>
+                        <PhotographIcon className='w-5 h-5' />
+                      </div>
+                      <div className='flex items-center justify-center w-9 h-9 rounded-full cursor-pointer relative hover:bg-cang-30'>
+                        <LinkIcon className='w-5 h-5' />
+                      </div>
+                      <div className='flex items-center justify-center w-9 h-9 rounded-full cursor-pointer relative hover:bg-cang-30'>
+                        <HashtagIcon className='w-5 h-5' />
+                      </div>
+                      <div className='flex items-center justify-center w-9 h-9 rounded-full cursor-pointer relative hover:bg-cang-30'>
+                        <AtSymbolIcon className='w-5 h-5' />
+                      </div>
+                    </div>
+                    <div className='flex'>
+                      <div className='flex items-center mr-2 text-cang-350'>{msg && msg.length}</div>
+                      <div className='flex items-center mr-2 text-cang-800 px-3 py-1 text-sm font-bold rounded-full cursor-pointer hover:bg-cang-30'>
+                        <GlobeIcon className='w-4 h-4 mr-1' /> 所有人可以回复
+                      </div>
+                      <button className='flex bg-cang-800 text-sm text-white h-9 px-4 justify-center items-center rounded-full cursor-pointer hover:bg-cang-810 active:bg-cang-820'>
+                        发送
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
               <Virtuoso useWindowScroll totalCount={1000} itemContent={index => <Item key={index} />} />
             </article>

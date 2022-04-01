@@ -23,14 +23,15 @@ import {
 import Item from '@/components/Item'
 import Nav from '@/components/Nav'
 import { Virtuoso } from 'react-virtuoso'
+import Emoji from '@/components/Emoji'
 
 const menuItems = [
   { title: '首页', icon: <HomeIcon className='w-6 h-6 mr-4' />, href: '/home' },
-  { title: '探索', icon: <HashtagIcon className='w-6 h-6 mr-4' />, href: '/home' },
-  { title: '书签', icon: <BookmarkIcon className='w-6 h-6 mr-4' />, href: '/home' },
+  // { title: '探索', icon: <HashtagIcon className='w-6 h-6 mr-4' />, href: '/home' },
+  // { title: '书签', icon: <BookmarkIcon className='w-6 h-6 mr-4' />, href: '/home' },
   { title: '列表', icon: <ClipboardListIcon className='w-6 h-6 mr-4' />, href: '/home' },
-  { title: '通知', icon: <BellIcon className='w-6 h-6 mr-4' />, href: '/home' },
-  { title: '私信', icon: <MailIcon className='w-6 h-6 mr-4' />, href: '/home' },
+  // { title: '通知', icon: <BellIcon className='w-6 h-6 mr-4' />, href: '/home' },
+  // { title: '私信', icon: <MailIcon className='w-6 h-6 mr-4' />, href: '/home' },
   { title: '标签', icon: <TagIcon className='w-6 h-6 mr-4' />, href: '/home' },
   { title: '资料', icon: <UserIcon className='w-6 h-6 mr-4' />, href: '/home' },
   { title: '设置', icon: <CogIcon className='w-6 h-6 mr-4' />, href: '/home' }
@@ -137,19 +138,41 @@ const Home: NextPage = () => {
                     contentEditable='true'></div>
                   <div className='flex justify-between border-t border-t-cang-200 mt-3 mb-3 pt-3'>
                     <div className='flex text-cang-800 h-9 items-center'>
-                      <div className='flex items-center justify-center w-9 h-9 rounded-full cursor-pointer relative hover:bg-cang-30'>
-                        <EmojiHappyIcon className='w-5 h-5' />
-                      </div>
+                      <Popover className='relative'>
+                        {({ open }) => (
+                          <>
+                            <Popover.Button className={`${open ? '' : 'text-opacity-90'}`}>
+                              <div className='flex items-center justify-center w-9 h-9 rounded-full cursor-pointer relative hover:bg-cang-30'>
+                                <EmojiHappyIcon className='w-5 h-5' />
+                              </div>
+                            </Popover.Button>
+                            <Transition
+                              as={Fragment}
+                              enter='transition ease-out duration-200'
+                              enterFrom='opacity-0 translate-y-1'
+                              enterTo='opacity-100 translate-y-0'
+                              leave='transition ease-in duration-150'
+                              leaveFrom='opacity-100 translate-y-0'
+                              leaveTo='opacity-0 translate-y-1'>
+                              <Popover.Panel className='absolute z-10 w-72 px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0'>
+                                <div className='overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5'>
+                                  <Emoji visible={open} />
+                                </div>
+                              </Popover.Panel>
+                            </Transition>
+                          </>
+                        )}
+                      </Popover>
                       <div className='flex items-center justify-center w-9 h-9 rounded-full cursor-pointer relative hover:bg-cang-30'>
                         <PhotographIcon className='w-5 h-5' />
                       </div>
                       <div className='flex items-center justify-center w-9 h-9 rounded-full cursor-pointer relative hover:bg-cang-30'>
                         <LinkIcon className='w-5 h-5' />
                       </div>
-                      <div className='flex items-center justify-center w-9 h-9 rounded-full cursor-pointer relative hover:bg-cang-30'>
+                      <div className='flex items-center justify-center w-9 h-9 rounded-full cursor-pointer relative hover:bg-cang-30 pointer-events-none'>
                         <HashtagIcon className='w-5 h-5' />
                       </div>
-                      <div className='flex items-center justify-center w-9 h-9 rounded-full cursor-pointer relative hover:bg-cang-30'>
+                      <div className='flex items-center justify-center w-9 h-9 rounded-full cursor-pointer relative hover:bg-cang-30 pointer-events-none'>
                         <AtSymbolIcon className='w-5 h-5' />
                       </div>
                     </div>
@@ -158,7 +181,10 @@ const Home: NextPage = () => {
                       <div className='flex items-center mr-2 text-cang-800 px-3 py-1 text-sm font-bold rounded-full cursor-pointer hover:bg-cang-30'>
                         <GlobeIcon className='w-4 h-4 mr-1' /> 所有人可以回复
                       </div>
-                      <button className='flex bg-cang-800 text-sm text-white h-9 px-4 justify-center items-center rounded-full cursor-pointer hover:bg-cang-810 active:bg-cang-820'>
+                      <button
+                        className={`flex bg-cang-800 text-sm text-white h-9 px-4 justify-center items-center rounded-full cursor-pointer ${
+                          !msg ? 'opacity-50 cursor-auto' : 'hover:bg-cang-810 active:bg-cang-820'
+                        }`}>
                         发送
                       </button>
                     </div>

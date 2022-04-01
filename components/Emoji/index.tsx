@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useEffect, useMemo, useRef, useState } from 'react'
+import React, { FC, Fragment, useEffect, useRef, useState } from 'react'
 import emojis from './emojis.json'
 
 interface IEmoji {
@@ -8,6 +8,7 @@ interface IEmoji {
 const Emoji: FC<IEmoji> = ({ visible }) => {
   const [tab, setTab] = useState(0)
   const [arr, setArr] = useState<number[]>([])
+  const [tabArr, setTabArr] = useState<number[]>([])
   const ref = useRef<HTMLDivElement>(null)
 
   const onScroll = (e: any) => {
@@ -25,19 +26,27 @@ const Emoji: FC<IEmoji> = ({ visible }) => {
   }
 
   const onTab = (index: number) => {
-    const top = ref.current?.getBoundingClientRect().top
-    ref.current?.scrollTo({ top: arr[index] - top!, behavior: 'smooth' })
     setTab(index)
+    ref.current?.scrollTo(0, tabArr[index])
   }
 
   useEffect(() => {
     if (visible) {
       const tablist = document.querySelectorAll('.emoji-title')
+      const tabBox = document.querySelectorAll('.emoji-box')
+      const top = ref.current?.getBoundingClientRect().top
+      const firstHeight = tabBox[0].getBoundingClientRect().height + tablist[0].getBoundingClientRect().height
       const arr: number[] = []
+      const tabArr: number[] = []
+      tabBox.forEach(item => {
+        arr.push(item.getBoundingClientRect().bottom - top! - firstHeight)
+      })
       tablist.forEach(item => {
-        arr.push(item.getBoundingClientRect().top)
+        tabArr.push(item.getBoundingClientRect().top - top!)
       })
       setArr(arr)
+      setTabArr(tabArr)
+      console.log(tabArr, 'tabArr', arr)
     }
   }, [visible])
 
@@ -45,7 +54,7 @@ const Emoji: FC<IEmoji> = ({ visible }) => {
     <div className='w-72 bg-white'>
       <div className='flex border-b border-cang-200'>
         {emojis.map((item, i) => (
-          <div className='w-9 leading-9 text-center text-2xl relative' key={i} onClick={() => onTab(i)}>
+          <div className={`w-9 leading-9 text-center text-2xl relative ${tab === i ? '' : 'grayscale'}`} key={i} onClick={() => onTab(i)}>
             {item.name}
             <div className={`h-1  w-full rounded-full ${tab === i ? 'bg-cang-800' : ''}`} />
           </div>
@@ -55,7 +64,7 @@ const Emoji: FC<IEmoji> = ({ visible }) => {
         {emojis.map(item => (
           <Fragment key={item.title}>
             <div className='text-cang-350 py-3 emoji-title pl-4'>{item.title}</div>
-            <div className='flex flex-wrap break-words text-center cursor-pointer pl-2.5'>
+            <div className='flex flex-wrap break-words text-center cursor-pointer pl-2.5 emoji-box'>
               {item.icons.map((icon, i) => (
                 <div className='w-9 h-9 text-2xl leading-9 hover:bg-cang-3 hover:rounded-full' key={i}>
                   {icon}

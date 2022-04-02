@@ -25,7 +25,7 @@ const Home: NextPage = () => {
   const so = (word?: string) => {
     const newTab = window.open('about:blank')
     if (word || wd) {
-      newTab!.location.href = `//www.baidu.com/s?tn=1344620_2_dxhuii_pg&ie=utf-8&wd=${encodeURIComponent(word || wd)}`
+      newTab!.location.href = `//www.baidu.com/s?tn=1247508_56690_dxhuii_pg&ie=utf-8&wd=${encodeURIComponent(word || wd)}`
     }
   }
 

@@ -1582,11 +1582,6 @@ chalk@^4.0.0, chalk@^4.0.2, chalk@^4.1.2:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chinese-lunar-calendar@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmmirror.com/chinese-lunar-calendar/-/chinese-lunar-calendar-1.0.1.tgz#d0d119df3ba5c40f3a9a982856c33f2d5b5b7d17"
-  integrity sha512-T5XjtA6ygOkxjwltYf8dEB1DLsPKewDKajf74fNeT6rH2g9EZPf2AHk6vAlK/SAImTYKXoUNQ3Q4JwN0BduqRA==
-
 chokidar@^3.5.3:
   version "3.5.3"
   resolved "https://registry.npmmirror.com/chokidar/-/chokidar-3.5.3.tgz#1cf37c8707b932bd1af1ae22c0432e2acd1903bd"

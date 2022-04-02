@@ -11,7 +11,6 @@
     "@headlessui/react": "^1.5.0",
     "@heroicons/react": "^1.0.5",
     "ahooks": "^3.3.0",
-    "chinese-lunar-calendar": "^1.0.1",
     "dayjs": "^1.11.0",
     "keymaster": "^1.6.2",
     "next": "12.1.0",

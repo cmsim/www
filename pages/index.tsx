@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import { getLunar } from 'chinese-lunar-calendar'
+import lunar from '@/utils/lunar'
 import styles from '../styles/Home.module.css'
 import { ChangeEvent, Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import dayjs from 'dayjs'
@@ -15,7 +15,7 @@ const Home: NextPage = () => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const nowLunar = useMemo(() => {
-    return getLunar(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate())
+    return lunar.getLunar(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate())
   }, [])
 
   useRafInterval(() => {

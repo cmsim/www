@@ -1,4 +1,4 @@
-import { api } from '@/pages/server'
+import api from '@/pages/services'
 import { FC } from 'react'
 import useSWR from 'swr'
 

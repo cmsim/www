@@ -6,13 +6,14 @@ import '../styles/globals.css'
 import qs from 'query-string'
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const prefix = 'http://127.0.0.1:7001/api/'
   return (
     <ThemeProvider attribute='class' defaultTheme='light' disableTransitionOnChange>
       <Meta />
       <SWRConfig
         value={{
           fetcher: (resource, init) => {
-            return fetch(`${resource}?${qs.stringify(init)}`).then(res => res.json())
+            return fetch(`${prefix}${resource}?${qs.stringify(init)}`).then(res => res.json())
           }
         }}>
         <Component {...pageProps} />

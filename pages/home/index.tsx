@@ -85,7 +85,7 @@ const Home: NextPage = () => {
                   ))}
                 </ul>
               </nav>
-              <div className='flex bg-cang-800 text-white h-12 justify-center items-center rounded-full mt-4 cursor-pointer hover:bg-cang-810 active:bg-cang-820'>
+              <div className='flex bg-cang-800 text-white h-12 justify-center items-center rounded-full mt-4 ml-3 cursor-pointer hover:bg-cang-810 active:bg-cang-820'>
                 发动态
               </div>
               <div className='fixed bottom-0 justify-center flex'>

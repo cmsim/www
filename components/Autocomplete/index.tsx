@@ -9,14 +9,12 @@ interface IAutocomplete {
 const Autocomplete: FC<IAutocomplete> = ({ wd, so }) => {
   const { data } = useSWR<{ data: string[] }>(['keywod/baidu', { wd }])
   return (
-    <div className='absolute z-10 top-12 w-full mt-3 transform -translate-x-1/2 left-1/2'>
-      <div className='overflow-hidden rounded-lg shadow-lg bg-white/90 p-4'>
-        {data?.data?.map(item => (
-          <div onClick={() => so(item)} key={item}>
-            {item}
-          </div>
-        ))}
-      </div>
+    <div className='overflow-hidden rounded-lg shadow-lg bg-white/90 py-3 cursor-pointer'>
+      {data?.data?.map(item => (
+        <div className='px-4 py-1 hover:bg-cang-3' onClick={() => so(item)} key={item}>
+          {item}
+        </div>
+      ))}
     </div>
   )
 }

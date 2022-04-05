@@ -22,7 +22,11 @@ const LinkList = () => {
   const [activeId, setActiveId] = useState<string | null>(null)
   const [items, setItems] = useState<ILink[]>([])
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 10
+      }
+    }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates
     })

@@ -10,9 +10,9 @@ export function SortableItem(props: { data: ILink }) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id })
 
   const style = {
-    transform: CSS.Transform.toString(transform),
-    transition
+    transform: CSS.Transform.toString(transform) ?? '',
+    transition: transition ?? ''
   }
 
-  return <Item ref={setNodeRef} {...attributes} {...listeners} id={id} data={props.data} style={style} />
+  return <Item ref={setNodeRef} id={id} style={style} {...listeners} {...attributes} {...props} />
 }

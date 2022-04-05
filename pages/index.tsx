@@ -8,56 +8,13 @@ import { useRafInterval, useDebounceFn } from 'ahooks'
 import { SearchIcon, ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/outline'
 import { Popover, Transition } from '@headlessui/react'
 import Autocomplete from '@/components/Autocomplete'
-import {
-  closestCenter,
-  DndContext,
-  DragEndEvent,
-  DragOverlay,
-  DragStartEvent,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors
-} from '@dnd-kit/core'
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, horizontalListSortingStrategy } from '@dnd-kit/sortable'
-
-import { SortableItem } from '@/components/Sortable/SortableItem'
-import { Item } from '@/components/Sortable/Item'
+import LinkList from '@/components/Sortable'
 
 const Home: NextPage = () => {
   const [time, setTime] = useState(new Date().toLocaleTimeString().split(':'))
   const [wd, setWd] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
-  const [activeId, setActiveId] = useState<string | null>(null)
-  const [items, setItems] = useState(Array.from(Array(30).keys()).map(i => i.toString()))
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates
-    })
-  )
-
-  function handleDragStart(event: DragStartEvent) {
-    const { active } = event
-
-    setActiveId(active.id)
-  }
-
-  function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event
-    if (!over) return
-    if (active.id !== over.id) {
-      setItems(items => {
-        const oldIndex = items.indexOf(active.id)
-        const newIndex = items.indexOf(over.id)
-
-        return arrayMove(items, oldIndex, newIndex)
-      })
-    }
-
-    setActiveId(null)
-  }
 
   const nowLunar = useMemo(() => {
     return lunars(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate())
@@ -181,16 +138,7 @@ const Home: NextPage = () => {
             <SearchIcon className='w-6 h-6 text-cang-350' />
           </div>
         </div>
-        <div className='flex flex-wrap w-[1200px]'>
-          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-            <SortableContext items={items} strategy={horizontalListSortingStrategy}>
-              {items.map(id => (
-                <SortableItem key={id} id={id} />
-              ))}
-            </SortableContext>
-            <DragOverlay>{activeId ? <Item id={activeId} /> : null}</DragOverlay>
-          </DndContext>
-        </div>
+        <LinkList />
       </div>
       <footer className='flex p-8 text-white justify-center items-center font-thin'>
         <Link href='/'>藏网阁 • CANGWANGGE.COM</Link>

@@ -14,13 +14,13 @@ import useSWR from 'swr'
 
 import { SortableItem } from '@/components/Sortable/SortableItem'
 import { Item } from '@/components/Sortable/Item'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, memo } from 'react'
 import { ILink } from '@/typings'
 
 const LinkList = () => {
-  const { data } = useSWR<{ data: { list: ILink[] } }>(['link/list', { pageSize: 20 }])
-  const [activeId, setActiveId] = useState<string | null>(null)
   const [items, setItems] = useState<ILink[]>([])
+  const { data } = useSWR<{ data: { list: ILink[] } }>(['link/list', { pageSize: 20 }], { revalidateOnFocus: false })
+  const [activeId, setActiveId] = useState<string | null>(null)
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -70,4 +70,4 @@ const LinkList = () => {
   )
 }
 
-export default LinkList
+export default memo(LinkList)

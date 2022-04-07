@@ -6,7 +6,7 @@ import '../styles/globals.css'
 import qs from 'query-string'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const prefix = 'https://d.vv.chat/api/'
+  const prefix = process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:7001/api/' : 'https://d.vv.chat/api/'
   return (
     <ThemeProvider attribute='class' defaultTheme='light' disableTransitionOnChange>
       <Meta />

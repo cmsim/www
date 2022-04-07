@@ -4,14 +4,14 @@ import lunars from '@/utils/lunar'
 import styles from '../styles/Home.module.css'
 import { ChangeEvent, Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import dayjs from 'dayjs'
-import { useRafInterval, useDebounceFn } from 'ahooks'
+import { useDebounceFn } from 'ahooks'
 import { SearchIcon, ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/outline'
 import { Popover, Transition } from '@headlessui/react'
 import Autocomplete from '@/components/Autocomplete'
 import LinkList from '@/components/Sortable'
+import Clock2 from '@/components/Clock'
 
 const Home: NextPage = () => {
-  const [time, setTime] = useState(new Date().toLocaleTimeString().split(':'))
   const [wd, setWd] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
@@ -19,10 +19,6 @@ const Home: NextPage = () => {
   const nowLunar = useMemo(() => {
     return lunars(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate())
   }, [])
-
-  useRafInterval(() => {
-    setTime(new Date().toLocaleTimeString().split(':'))
-  }, 1000)
 
   const so = (word?: string) => {
     const newTab = window.open('about:blank')
@@ -59,14 +55,13 @@ const Home: NextPage = () => {
     }
   }, [wd])
 
+  console.log(1111)
+
   return (
     <div className={styles.container}>
       <div className='container mx-auto flex p-4 justify-center flex-wrap flex-col content-center h-[calc(100vh_-_90px)]'>
         <div className='flex text-7xl justify-center items-center h-20 text-white text-shadow'>
-          <div>{time[0]}</div>
-          <div className='relative -top-2'>:</div>
-          <div>{time[1]}</div>
-          <div className='flex items-end w-11 text-4xl h-20 pb-2 ml-2'>{time[2]}</div>
+          <Clock2 />
         </div>
         <div className='text-center text-white font-thin'>
           <span className='mr-3'>{dayjs().format('YYYY年MM月DD日')}</span>

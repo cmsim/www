@@ -1,19 +1,21 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import lunars from '@/utils/lunar'
-import styles from '../styles/Home.module.css'
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react'
 import dayjs from 'dayjs'
 import { useDebounceFn } from 'ahooks'
-import { SearchIcon, ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/outline'
+import { SearchIcon, ChevronUpIcon, ChevronDownIcon, LocationMarkerIcon } from '@heroicons/react/outline'
 import { UserCircleIcon, CogIcon } from '@heroicons/react/solid'
 import Autocomplete from '@/components/Autocomplete'
 import LinkList from '@/components/Sortable'
 import Clock from '@/components/Clock'
 import Modal from '@/components/Modal'
 import Popover from '@/components/Popover'
+import useSWR from 'swr'
+import { formatPic } from '@/utils'
 
 const Home: NextPage = () => {
+  const { data } = useSWR<{ data: any[] }>(['tool/day'], { revalidateOnFocus: false })
   const [wd, setWd] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
@@ -74,13 +76,17 @@ const Home: NextPage = () => {
     }
   }, [wd])
 
+  const url = useMemo(() => {
+    return formatPic(data?.data?.[0]?.url)
+  }, [data])
+
   return (
-    <div className={styles.container}>
+    <div className='h-[100vh] bg-cover bg-center bg-cang-500' style={{ backgroundImage: `url(${url})` }}>
       <div className='fixed top-9 right-9 flex text-cang-400 cursor-pointer'>
         <UserCircleIcon className='w-6 h-6 mr-4' onClick={openLogin} />
         <CogIcon className='w-6 h-6' onClick={openModal} />
       </div>
-      <div className='container mx-auto flex p-4 justify-center flex-wrap flex-col content-center h-[calc(100vh_-_90px)]'>
+      <div className='container mx-auto flex p-4 justify-center flex-wrap flex-col content-center h-[100vh]'>
         <Clock />
         <div className='text-center text-white font-thin'>
           <span className='mr-3'>{dayjs().format('YYYY年MM月DD日')}</span>
@@ -116,13 +122,17 @@ const Home: NextPage = () => {
               </Popover>
             }
           </form>
-          <div className='absolute w-14 right-0 flex h-12 items-center justify-center cursor-pointer' onClick={() => so()}>
+          <div className='relative w-14 right-0 flex h-12 items-center justify-center cursor-pointer' onClick={() => so()}>
             <SearchIcon className='w-6 h-6 text-cang-350' />
           </div>
         </div>
         <LinkList />
       </div>
-      <footer className='flex p-8 text-white justify-center items-center font-thin'>
+      <div className='flex justify-center items-center h-9 bg-cang-500/70 absolute transform -translate-x-1/2 left-1/2 bottom-20 text-white px-4 rounded-md cursor-pointer'>
+        <LocationMarkerIcon className='w-5 h-5 mr-2' />
+        {data?.data?.[0]?.title} - {data?.data?.[0]?.copyright}
+      </div>
+      <footer className='flex text-white justify-center items-center absolute transform -translate-x-1/2 left-1/2 bottom-10'>
         <Link href='/'>藏网阁 • CANGWANGGE.COM</Link>
       </footer>
       <Modal isOpen={isOpen} onClose={closeModal} title='设置'>

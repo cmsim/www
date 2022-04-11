@@ -4,7 +4,7 @@ import lunars from '@/utils/lunar'
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react'
 import dayjs from 'dayjs'
 import { useDebounceFn } from 'ahooks'
-import { SearchIcon, ChevronUpIcon, ChevronDownIcon, LocationMarkerIcon } from '@heroicons/react/outline'
+import { SearchIcon, ChevronUpIcon, ChevronDownIcon, LocationMarkerIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline'
 import { UserCircleIcon, CogIcon } from '@heroicons/react/solid'
 import Autocomplete from '@/components/Autocomplete'
 import LinkList from '@/components/Sortable'
@@ -15,12 +15,13 @@ import useSWR from 'swr'
 import { formatPic } from '@/utils'
 
 const Home: NextPage = () => {
-  const { data } = useSWR<{ data: any[] }>(['tool/day'], { revalidateOnFocus: false })
+  const { data } = useSWR<{ data: any[] }>(['tool/day', { n: 8 }], { revalidateOnFocus: false })
   const [wd, setWd] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
   const [isOpen, setIsOpen] = useState(false)
   const [isOpenLogin, setIsOpenLogin] = useState(false)
+  const [bz, setBz] = useState(0)
   function closeModal() {
     setIsOpen(false)
   }
@@ -76,12 +77,15 @@ const Home: NextPage = () => {
     }
   }, [wd])
 
-  const url = useMemo(() => {
-    return formatPic(data?.data?.[0]?.url)
-  }, [data])
+  const bing = useMemo(() => {
+    const { url, copyrightlink, title, copyright } = data?.data?.[bz] || {}
+    return { url: formatPic(url), copyrightlink, title, copyright }
+  }, [data, bz])
+
+  console.log(bz, data)
 
   return (
-    <div className='h-[100vh] bg-cover bg-center bg-cang-500' style={{ backgroundImage: `url(${url})` }}>
+    <div className='h-[100vh] bg-cover bg-center bg-cang-500' style={{ backgroundImage: `url(${bing.url})` }}>
       <div className='fixed top-9 right-9 flex text-cang-400 cursor-pointer'>
         <UserCircleIcon className='w-6 h-6 mr-4' onClick={openLogin} />
         <CogIcon className='w-6 h-6' onClick={openModal} />
@@ -121,16 +125,38 @@ const Home: NextPage = () => {
                 )}
               </Popover>
             }
+            <div className='absolute w-14 right-0 flex h-12 items-center justify-center cursor-pointer' onClick={() => so()}>
+              <SearchIcon className='w-6 h-6 text-cang-350' />
+            </div>
           </form>
-          <div className='relative w-14 right-0 flex h-12 items-center justify-center cursor-pointer' onClick={() => so()}>
-            <SearchIcon className='w-6 h-6 text-cang-350' />
-          </div>
         </div>
         <LinkList />
       </div>
-      <div className='flex justify-center items-center h-9 bg-cang-500/70 absolute transform -translate-x-1/2 left-1/2 bottom-20 text-white px-4 rounded-md cursor-pointer'>
-        <LocationMarkerIcon className='w-5 h-5 mr-2' />
-        {data?.data?.[0]?.title} - {data?.data?.[0]?.copyright}
+      <div className='flex absolute transform -translate-x-1/2 left-1/2 bottom-20 text-white cursor-pointer'>
+        <a className='flex justify-between items-center h-9 bg-cang-500/70 px-4 rounded-md' href={bing.copyrightlink} target='_blank'>
+          <LocationMarkerIcon className='w-5 h-5 mr-2' />
+          {bing.title} - {bing.copyright}
+        </a>
+        <div className='flex ml-2'>
+          <div
+            className='flex justify-center items-center h-9 bg-cang-500/70 px-2 rounded-md mr-2'
+            onClick={() => {
+              if (bz === 0) return
+              const newBz = bz - 1
+              setBz(newBz)
+            }}>
+            <ChevronLeftIcon className='w-5 h-5' />
+          </div>
+          <div
+            className='flex justify-center items-center h-9 bg-cang-500/70 px-2 rounded-md'
+            onClick={() => {
+              if (bz > data?.data?.length!) return
+              const newBz = bz + 1
+              setBz(newBz)
+            }}>
+            <ChevronRightIcon className='w-5 h-5' />
+          </div>
+        </div>
       </div>
       <footer className='flex text-white justify-center items-center absolute transform -translate-x-1/2 left-1/2 bottom-10'>
         <Link href='/'>藏网阁 • CANGWANGGE.COM</Link>

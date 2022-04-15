@@ -3,17 +3,16 @@ import { ThemeProvider } from 'next-themes'
 import { SWRConfig } from 'swr'
 import Meta from '@/components/meta'
 import '../styles/globals.css'
-import qs from 'query-string'
+import { getFetch } from './utils'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const prefix = process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:7001/api/' : 'https://d.vv.chat/api/'
   return (
     <ThemeProvider attribute='class' defaultTheme='light' disableTransitionOnChange>
       <Meta />
       <SWRConfig
         value={{
-          fetcher: (resource, init) => {
-            return fetch(`${prefix}${resource}?${qs.stringify(init)}`).then(res => res.json())
+          fetcher: (url, data) => {
+            return getFetch(url, data)
           }
         }}>
         <Component {...pageProps} />

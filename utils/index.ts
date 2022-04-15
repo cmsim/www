@@ -1,3 +1,13 @@
+import HttpReq from './fetch'
+
+const Http = new HttpReq()
+export async function getFetch<R, P = {}>(url: string, params?: any) {
+  return Http.postFetch<R, P>(url, params, 'GET')
+}
+export async function postFetch<R, P = {}>(url: string, params?: any) {
+  return Http.postFetch<R, P>(url, params, 'POST')
+}
+
 export const formatPic = (url: string, width = 2560, height = 1440) => {
   /**
    * https://cn.bing.com/th?id=OHR.Malaga_ZH-CN9644862917_UHD.jpg&w=2880&h=1620

@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import lunars from '@/utils/lunar'
+import lunar from '@/utils/lunar'
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react'
 import dayjs from 'dayjs'
 import { useDebounceFn } from 'ahooks'
@@ -22,7 +22,7 @@ const Home: NextPage = () => {
   const [bz, setBz] = useState(0)
 
   const nowLunar = useMemo(() => {
-    return lunars(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate())
+    return lunar(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate())
   }, [])
 
   const so = (word?: string) => {
@@ -64,8 +64,6 @@ const Home: NextPage = () => {
     const { url, copyrightlink, title, copyright } = data?.data?.[bz] || {}
     return { url: formatPic(url), copyrightlink, title, copyright }
   }, [data, bz])
-
-  console.log(bz, data)
 
   return (
     <div className='h-[100vh] bg-cover bg-center bg-cang-500' style={{ backgroundImage: `url(${bing.url})` }}>

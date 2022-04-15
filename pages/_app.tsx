@@ -2,8 +2,8 @@ import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'next-themes'
 import { SWRConfig } from 'swr'
 import Meta from '@/components/meta'
-import '../styles/globals.css'
-import { getFetch } from './utils'
+import '@/styles/globals.css'
+import { getFetch } from '@/utils'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

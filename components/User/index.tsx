@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { UserCircleIcon, CogIcon } from '@heroicons/react/solid'
 import Modal from '../Modal'
-import { getFetch } from '@/pages/utils'
+import { getFetch } from '@/utils'
 import Login from '../Login'
 
 const User: FC<{ data: { id: string } }> = props => {
@@ -35,7 +35,7 @@ const User: FC<{ data: { id: string } }> = props => {
     setUserInfo(info)
     closeLogin()
   }
-  console.log(data, data?.id)
+
   return (
     <>
       <div className='fixed top-9 right-9 flex text-cang-400 cursor-pointer'>

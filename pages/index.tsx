@@ -70,7 +70,7 @@ const Home: NextPage = () => {
       <User data={user?.data} />
       <div className='container mx-auto flex p-4 justify-center flex-wrap flex-col content-center h-[100vh]'>
         <Clock />
-        <div className='text-center text-white font-thin'>
+        <div className='text-center text-white'>
           <span className='mr-3'>{dayjs().format('YYYY年MM月DD日')}</span>
           <span className='mr-3'>星期{['日', '一', '二', '三', '四', '五', '六'][new Date().getDay()]}</span>
           <span className='mr-3'>{nowLunar.dateStr}</span>

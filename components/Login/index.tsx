@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import CryptoJS from 'crypto-js'
 import { postFetch } from '@/utils'
+import { request } from '@/utils/request'
 
 type IUser = { username: string; password: string }
 interface ILogin {
@@ -20,10 +21,9 @@ const Login: FC<ILogin> = props => {
     const md5 = CryptoJS.MD5(data.password).toString()
     data.password = md5
     const user = await postFetch<{ data: string }>('user/login', data)
-    console.log(user, data)
     if (user) {
       localStorage.setItem('token', user.data)
-      success()
+      setTimeout(() => success(), 300)
     }
   }
   return (

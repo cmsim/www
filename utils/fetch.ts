@@ -7,7 +7,7 @@ const prefix = process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:7001/a
  */
 enum ContentType {
   json = 'application/json;charset=UTF-8',
-  form = 'application/x-www-form-urlencoded; charset=UTF-8'
+  form = 'application/x-www-form-urlencoded;charset=utf-8'
 }
 
 interface IHttp {
@@ -31,7 +31,7 @@ export default class HttpRequests implements IHttp {
     let options: RequestInit = {
       method,
       headers: {
-        'Content-Type': method === 'GET' ? ContentType.json : ContentType.form,
+        'Content-Type': method === 'POST' ? ContentType.json : ContentType.form,
         Authorization: `Bearer ${token}`
       }
     }

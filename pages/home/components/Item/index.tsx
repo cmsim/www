@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { DotsHorizontalIcon, ChatIcon, SwitchHorizontalIcon, HeartIcon, UploadIcon } from '@heroicons/react/outline'
-import { Popover, Transition } from '@headlessui/react'
+import Popover from '@/components/Popover'
 
 const Item = () => {
   return (
@@ -16,31 +16,21 @@ const Item = () => {
             <div className='text-cang-350 ml-1'>·</div>
             <div className='text-cang-350 ml-1'>60分钟</div>
           </div>
-          <Popover className='relative'>
-            {({ open }) => (
-              <>
-                <Popover.Button className={`${open ? '' : 'text-opacity-90'}`}>
-                  <div className='flex items-center justify-center text-cang-350 w-9 h-9 rounded-full cursor-pointer relative -top-2 hover:bg-cang-30'>
-                    <DotsHorizontalIcon className='w-5 h-5 hover:text-cang-800' />
-                  </div>
-                </Popover.Button>
-                <Transition
-                  as={Fragment}
-                  enter='transition ease-out duration-200'
-                  enterFrom='opacity-0 translate-y-1'
-                  enterTo='opacity-100 translate-y-0'
-                  leave='transition ease-in duration-150'
-                  leaveFrom='opacity-100 translate-y-0'
-                  leaveTo='opacity-0 translate-y-1'>
-                  <Popover.Panel className='absolute z-10 -top-3 max-w-sm mt-3 -right-3'>
-                    <div className='overflow-hidden rounded shadow-menu'>
-                      <div className='relative grid gap-8 p-7 bg-white lg:grid-cols-2'>1111</div>
-                    </div>
-                  </Popover.Panel>
-                </Transition>
-              </>
-            )}
-          </Popover>
+          <div className='relative'>
+            <Popover
+              className='w-28 -top-3 right-0 translate-x-0 left-auto'
+              content={
+                <div className='overflow-hidden rounded shadow-menu'>
+                  <div className='relative grid gap-8 p-7 bg-white lg:grid-cols-2'>1111</div>
+                </div>
+              }>
+              {() => (
+                <div className='flex items-center justify-center text-cang-350 w-9 h-9 rounded-full cursor-pointer relative -top-2 hover:bg-cang-30'>
+                  <DotsHorizontalIcon className='w-5 h-5 hover:text-cang-800' />
+                </div>
+              )}
+            </Popover>
+          </div>
         </div>
         <div className='break-words leading-5 mt-2'>你觉得这世界啥时候会好？</div>
         <div className='flex justify-between mt-3 -ml-2 max-w-lg h-5 font-light'>

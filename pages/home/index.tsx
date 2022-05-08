@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import { useState, Fragment, ChangeEvent } from 'react'
-import { Dialog, Transition, Popover } from '@headlessui/react'
 import {
   MoonIcon,
   SunIcon,
@@ -20,11 +19,12 @@ import {
   LinkIcon,
   AtSymbolIcon
 } from '@heroicons/react/outline'
-import Item from '@/components/Item'
-import Nav from '@/components/Nav'
+import Item from './components/Item'
+import Nav from './components/Nav'
 import { Virtuoso } from 'react-virtuoso'
-import Emoji from '@/components/Emoji'
-import Head from 'next/head'
+import Emoji from './components/Emoji'
+import Popover from '@/components/Popover'
+import Modal from '@/components/Modal'
 
 const menuItems = [
   { title: '首页', icon: <HomeIcon className='w-6 h-6 mr-4' />, href: '/home' },
@@ -50,7 +50,7 @@ const Home: NextPage = () => {
   }
 
   const pin = (e: ChangeEvent<HTMLDivElement>) => {
-    setMsg(e.target.innerHTML)
+    setMsg(e.target.textContent!)
   }
 
   return (
@@ -92,29 +92,17 @@ const Home: NextPage = () => {
               <div className='w-10 h-10 rounded-full overflow-hidden' onClick={openModal}>
                 <img src='https://tva1.sinaimg.cn/large/006bnWk0gy1gzd2ej5yzyj301c01cgld.jpg' />
               </div>
-              <Popover className='relative'>
-                {({ open }) => (
-                  <>
-                    <Popover.Button className={`${open ? '' : 'text-opacity-90'}`}>
-                      <div className='w-10 h-10 rounded-full overflow-hidden'>
-                        <img src='https://tva1.sinaimg.cn/large/006bnWk0gy1gzd2ej5yzyj301c01cgld.jpg' />
-                      </div>
-                    </Popover.Button>
-                    <Transition
-                      as={Fragment}
-                      enter='transition ease-out duration-200'
-                      enterFrom='opacity-0 translate-y-1'
-                      enterTo='opacity-100 translate-y-0'
-                      leave='transition ease-in duration-150'
-                      leaveFrom='opacity-100 translate-y-0'
-                      leaveTo='opacity-0 translate-y-1'>
-                      <Popover.Panel className='absolute z-10 bottom-14 w-screen max-w-sm px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0'>
-                        <div className='overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5'>
-                          <div className='relative grid gap-8 bg-white p-7 lg:grid-cols-2'>1111</div>
-                        </div>
-                      </Popover.Panel>
-                    </Transition>
-                  </>
+              <Popover
+                className='bottom-14 max-w-sm'
+                content={
+                  <div className='overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5'>
+                    <div className='relative grid gap-8 bg-white p-7 lg:grid-cols-2'>1111</div>
+                  </div>
+                }>
+                {() => (
+                  <div className='w-10 h-10 rounded-full overflow-hidden'>
+                    <img src='https://tva1.sinaimg.cn/large/006bnWk0gy1gzd2ej5yzyj301c01cgld.jpg' />
+                  </div>
                 )}
               </Popover>
             </div>
@@ -137,30 +125,18 @@ const Home: NextPage = () => {
                   onInput={pin}
                   contentEditable='true'></div>
                 <div className='flex justify-between border-t border-t-cang-200 mt-3 mb-3 pt-3'>
-                  <div className='flex text-cang-800 h-9 items-center'>
-                    <Popover className='relative'>
-                      {({ open }) => (
-                        <>
-                          <Popover.Button className={`${open ? '' : 'text-opacity-90'}`}>
-                            <div className='flex items-center justify-center w-9 h-9 rounded-full cursor-pointer relative hover:bg-cang-30'>
-                              <EmojiHappyIcon className='w-5 h-5' />
-                            </div>
-                          </Popover.Button>
-                          <Transition
-                            as={Fragment}
-                            enter='transition ease-out duration-200'
-                            enterFrom='opacity-0 translate-y-1'
-                            enterTo='opacity-100 translate-y-0'
-                            leave='transition ease-in duration-150'
-                            leaveFrom='opacity-100 translate-y-0'
-                            leaveTo='opacity-0 translate-y-1'>
-                            <Popover.Panel className='absolute z-10 w-72 px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0'>
-                              <div className='overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5'>
-                                <Emoji visible={open} />
-                              </div>
-                            </Popover.Panel>
-                          </Transition>
-                        </>
+                  <div className='flex text-cang-800 h-9 items-center relative'>
+                    <Popover
+                      className='w-72 top-6'
+                      content={
+                        <div className='overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5'>
+                          <Emoji visible={true} />
+                        </div>
+                      }>
+                      {() => (
+                        <div className='flex items-center justify-center w-9 h-9 rounded-full cursor-pointer relative hover:bg-cang-30'>
+                          <EmojiHappyIcon className='w-5 h-5' />
+                        </div>
                       )}
                     </Popover>
                     <div className='flex items-center justify-center w-9 h-9 rounded-full cursor-pointer relative hover:bg-cang-30'>
@@ -176,11 +152,23 @@ const Home: NextPage = () => {
                       <AtSymbolIcon className='w-5 h-5' />
                     </div>
                   </div>
-                  <div className='flex'>
+                  <div className='flex relative'>
                     <div className='flex items-center mr-2 text-cang-350'>{msg && msg.length}</div>
-                    <div className='flex items-center mr-2 text-cang-800 px-3 py-1 text-sm font-bold rounded-full cursor-pointer hover:bg-cang-30'>
-                      <GlobeIcon className='w-4 h-4 mr-1' /> 所有人可以回复
-                    </div>
+                    <Popover
+                      className='w-36 top-7'
+                      content={
+                        <div className='overflow-hidden rounded-lg shadow-lg bg-white py-4 text-sm'>
+                          <div className='h-9 leading-9 hover:bg-cang-3 px-4 cursor-pointer'>公开</div>
+                          <div className='h-9 leading-9 hover:bg-cang-3 px-4 cursor-pointer'>仅粉丝</div>
+                          <div className='h-9 leading-9 hover:bg-cang-3 px-4 cursor-pointer'>仅自己</div>
+                        </div>
+                      }>
+                      {() => (
+                        <div className='flex items-center mr-2 text-cang-800 px-3 py-1 text-sm font-bold rounded-full cursor-pointer hover:bg-cang-30'>
+                          <GlobeIcon className='w-4 h-4 mr-1' /> 公开
+                        </div>
+                      )}
+                    </Popover>
                     <button
                       className={`flex bg-cang-800 text-sm text-white h-9 px-4 justify-center items-center rounded-full cursor-pointer ${
                         !msg ? 'opacity-50 cursor-auto' : 'hover:bg-cang-810 active:bg-cang-820'
@@ -205,53 +193,9 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as='div' className='fixed inset-0 z-10 overflow-y-auto' onClose={closeModal}>
-          <div className='min-h-screen px-4 text-center'>
-            <Transition.Child
-              as={Fragment}
-              enter='ease-out duration-300'
-              enterFrom='opacity-0'
-              enterTo='opacity-100'
-              leave='ease-in duration-200'
-              leaveFrom='opacity-100'
-              leaveTo='opacity-0'>
-              <Dialog.Overlay className='fixed inset-0' />
-            </Transition.Child>
-            <span className='inline-block h-screen align-middle' aria-hidden='true'>
-              &#8203;
-            </span>
-            <Transition.Child
-              as={Fragment}
-              enter='ease-out duration-300'
-              enterFrom='opacity-0 scale-95'
-              enterTo='opacity-100 scale-100'
-              leave='ease-in duration-200'
-              leaveFrom='opacity-100 scale-100'
-              leaveTo='opacity-0 scale-95'>
-              <div className='inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl'>
-                <Dialog.Title as='h3' className='text-lg font-medium leading-6 text-gray-900'>
-                  Payment successful
-                </Dialog.Title>
-                <div className='mt-2'>
-                  <p className='text-sm text-gray-500'>
-                    Your payment has been successfully submitted. We’ve sent you an email with all of the details of your order.
-                  </p>
-                </div>
-
-                <div className='mt-4'>
-                  <button
-                    type='button'
-                    className='inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500'
-                    onClick={closeModal}>
-                    Got it, thanks!
-                  </button>
-                </div>
-              </div>
-            </Transition.Child>
-          </div>
-        </Dialog>
-      </Transition>
+      <Modal isOpen={isOpen} onClose={closeModal} title='登录'>
+        <div>332222</div>
+      </Modal>
     </div>
   )
 }

@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import CryptoJS from 'crypto-js'
 import { postFetch } from '@/utils'
-import { request } from '@/utils/request'
 
 type IUser = { username: string; password: string }
 interface ILogin {

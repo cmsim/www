@@ -46,13 +46,12 @@ const Emoji: FC<IEmoji> = ({ visible }) => {
       })
       setArr(arr)
       setTabArr(tabArr)
-      console.log(tabArr, 'tabArr', arr)
     }
   }, [visible])
 
   return (
     <div className='w-72 bg-white'>
-      <div className='flex border-b border-cang-200'>
+      <div className='flex border-b border-cang-200 cursor-pointer'>
         {emojis.map((item, i) => (
           <div className={`w-9 leading-9 text-center text-2xl relative ${tab === i ? '' : 'grayscale'}`} key={i} onClick={() => onTab(i)}>
             {item.name}

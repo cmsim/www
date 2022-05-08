@@ -76,7 +76,7 @@ const Home: NextPage = () => {
           <span className='mr-3'>{nowLunar.dateStr}</span>
         </div>
         <div className='flex my-12 self-center w-[584px] h-12 relative'>
-          <Popover content={<div className='overflow-hidden rounded-lg shadow-lg bg-white/90'>1111</div>}>
+          <Popover className='w-full top-12' content={<div className='overflow-hidden rounded-lg shadow-lg bg-white/90'>1111</div>}>
             {open => (
               <div className='absolute flex w-14 left-0 h-12 items-center justify-center hover:bg-white rounded-l-full cursor-pointer'>
                 <img src='https://cms-1251036128.cos.ap-shanghai.myqcloud.com/assets/baidu.svg' className='w-5 h-5 mr-1' />
@@ -85,24 +85,22 @@ const Home: NextPage = () => {
             )}
           </Popover>
           <form ref={formRef} autoComplete='off' className='flex w-full'>
-            {
-              <Popover content={wd && <Autocomplete wd={wd} so={so} />}>
-                {() => (
-                  <div className='flex w-full'>
-                    <input
-                      autoFocus
-                      autoComplete='off'
-                      placeholder='输入并搜索'
-                      className='w-full outline-none rounded-full shadow-menu pl-14 bg-white/90'
-                      type='text'
-                      name='wd'
-                      onChange={onSearch}
-                      ref={inputRef}
-                    />
-                  </div>
-                )}
-              </Popover>
-            }
+            <Popover className='w-full top-12' content={wd && <Autocomplete wd={wd} so={so} />}>
+              {() => (
+                <div className='flex w-full'>
+                  <input
+                    autoFocus
+                    autoComplete='off'
+                    placeholder='输入并搜索'
+                    className='w-full outline-none rounded-full shadow-menu pl-14 bg-white/90'
+                    type='text'
+                    name='wd'
+                    onChange={onSearch}
+                    ref={inputRef}
+                  />
+                </div>
+              )}
+            </Popover>
             <div className='absolute w-14 right-0 flex h-12 items-center justify-center cursor-pointer' onClick={() => so()}>
               <SearchIcon className='w-6 h-6 text-cang-350' />
             </div>

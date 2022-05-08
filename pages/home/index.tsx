@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import { useState, Fragment, ChangeEvent } from 'react'
+import { Virtuoso } from 'react-virtuoso'
 import {
   MoonIcon,
   SunIcon,
@@ -21,7 +22,6 @@ import {
 } from '@heroicons/react/outline'
 import Item from './components/Item'
 import Nav from './components/Nav'
-import { Virtuoso } from 'react-virtuoso'
 import Emoji from './components/Emoji'
 import Popover from '@/components/Popover'
 import Modal from '@/components/Modal'

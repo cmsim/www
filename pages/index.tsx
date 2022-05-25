@@ -12,6 +12,7 @@ import Popover from '@/components/Popover'
 import useSWR from 'swr'
 import { formatPic } from '@/utils'
 import User from '@/components/User'
+import TopBar from '@/components/TopBar'
 
 const Home: NextPage = () => {
   const { data } = useSWR<{ data: any[] }>(['tool/day', { n: 8 }], { revalidateOnFocus: false })
@@ -67,6 +68,7 @@ const Home: NextPage = () => {
 
   return (
     <div className='h-[100vh] bg-cover bg-center bg-cang-500' style={{ backgroundImage: `url(${bing.url})` }}>
+      <TopBar />
       <User data={user?.data} />
       <div className='container mx-auto flex p-4 justify-center flex-wrap flex-col content-center h-[100vh]'>
         <Clock />

@@ -6,6 +6,7 @@ import {
   DragStartEvent,
   KeyboardSensor,
   PointerSensor,
+  UniqueIdentifier,
   useSensor,
   useSensors
 } from '@dnd-kit/core'
@@ -20,7 +21,7 @@ import { ILink } from '@/typings'
 const LinkList = () => {
   const [items, setItems] = useState<ILink[]>([])
   const { data } = useSWR<{ data: { list: ILink[] } }>(['link/list', { pageSize: 20 }], { revalidateOnFocus: false })
-  const [activeId, setActiveId] = useState<string | null>(null)
+  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null)
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {

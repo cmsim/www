@@ -39,3 +39,4 @@ yarn-error.log*
 # logs
 yarn.lock
 .DS_Store
+.npmrc
